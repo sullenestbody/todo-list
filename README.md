@@ -1,17 +1,26 @@
 # Todo List
 
-A simple React todo list app built with Vite for Code the Dream React Lesson 1.
+This is my Lesson 1 React assignment for Code the Dream.
 
 ## Description
 
-This app displays a title and a list of todo items using React and JSX.
+This is a React todo List. I built this app using Vite.
 
 ## Installation
 
-Clone the repo and install dependencies:
+Install the project dependencies:
 
 ```bash
 npm install
+```
+
+## Run the Development Server
+
+Start the local development server:
+
+```bash
+npm run dev
+```
 
 Then open the local URL shown in the terminal, usually:
 
