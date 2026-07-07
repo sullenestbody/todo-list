@@ -2,14 +2,14 @@ import './App.css'
 
 function App() {
   const todoList = [
-    { id: 1, title: 'review resources' },
-    { id: 2, title: 'take notes' },
-    { id: 3, title: 'code out app' },
+    { id: 1, title: 'analyze assignments' },
+    { id: 2, title: 'put repo through CTD AI' },
+    { id: 3, title: 'final check' },
   ]
 
   return (
     <div>
-      <h1>My Todos</h1>
+      <h1>Todo List</h1>
       <ul>
         {todoList.map((todo) => (
           <li key={todo.id}>{todo.title}</li>

@@ -8,7 +8,7 @@ This app displays a title and a list of todo items using React and JSX.
 
 ## Installation
 
-Clone the repository and install dependencies:
+Clone the repo and install dependencies:
 
 ```bash
 npm install
