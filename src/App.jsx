@@ -1,22 +1,32 @@
+import { useState } from 'react';
+import TodoForm from './TodoForm.jsx';
+import TodoList from './TodoList.jsx';
+import './App.css';
 
-import { useState } from 'react'
-import TodoForm from './TodoForm.jsx'
-import TodoList from './TodoList.jsx'
-import './App.css'
- const todos = [
-    { id: 1, title: 'analyze assignments' },
-    { id: 2, title: 'put repo through CTD AI' },
-    { id: 3, title: 'final check' },
-  ]
 function App() {
-  const [todoList, setTodoList] = useState(todos)
+  const [todoList, setTodoList] = useState([]);
+
+  function addTodo(todoTitle) {
+    const newTodo = {
+      id: Date.now(),
+      title: todoTitle,
+    };
+
+    setTodoList((previousTodoList) => [
+      newTodo,
+      ...previousTodoList,
+    ]);
+  }
+
   return (
     <div>
       <h1>Todo List</h1>
-      <TodoForm />
+
+      <TodoForm onAddTodo={addTodo} />
+
       <TodoList todoList={todoList} />
     </div>
-  )
+  );
 }
 
-export default App
+export default App;
