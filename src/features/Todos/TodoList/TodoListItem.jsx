@@ -32,9 +32,11 @@ return (
       {isEditing ? (
   <>
     <TextInputWithLabel
-      value={workingTitle}
-      onChange={handleEdit}
-    />
+  elementId={`todoTitle-${todo.id}`}
+  labelText="Todo"
+  value={workingTitle}
+  onChange={handleEdit}
+/>
 
     <button type="button" onClick={handleCancel}>
   Cancel

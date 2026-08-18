@@ -8,6 +8,7 @@ const [error, setError] = useState('');
 const [isTodoListLoading, setIsTodoListLoading] = useState(false);
 useEffect(() => {
   async function fetchTodos() {
+    setError('');
     setIsTodoListLoading(true);
 
     try {
@@ -44,6 +45,7 @@ useEffect(() => {
   }
 }, [token]); 
 const updateTodo = async (editedTodo) => {
+  setError('');
   const originalTodo = todoList.find(
     (todo) => todo.id === editedTodo.id
   );
@@ -90,8 +92,9 @@ const updateTodo = async (editedTodo) => {
     setError(error.message);
   }
 };
+async function addTodo(todoTitle) {
+  setError('');
 
-  async function addTodo(todoTitle) {
   const newTodo = {
     id: Date.now(),
     title: todoTitle,
@@ -138,7 +141,9 @@ const updateTodo = async (editedTodo) => {
   }
 }
 
-  const completeTodo = async (id) => {
+const completeTodo = async (id) => {
+  setError('');
+
   const originalTodo = todoList.find((todo) => todo.id === id);
 
   if (!originalTodo) {
