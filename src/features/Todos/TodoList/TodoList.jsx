@@ -7,6 +7,7 @@ function TodoList({
   onUpdateTodo,
   dataVersion,
 }) {
+
   const filteredTodoList = useMemo(() => {
     return {
       version: dataVersion,
@@ -17,7 +18,7 @@ function TodoList({
   return filteredTodoList.todos.length === 0 ? (
     <p>Add todo above to get started</p>
   ) : (
-    <ul>
+    <ul data-version={filteredTodoList.version}>
       {filteredTodoList.todos.map((todo) => (
         <TodoListItem
           key={todo.id}

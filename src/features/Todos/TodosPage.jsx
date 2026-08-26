@@ -76,7 +76,7 @@ const invalidateCache = useCallback(() => {
 }, []);
 const updateTodo = async (editedTodo) => {
   setError('');
-  invalidateCache();
+ 
   const originalTodo = todoList.find(
     (todo) => todo.id === editedTodo.id
   );
@@ -110,16 +110,19 @@ const updateTodo = async (editedTodo) => {
     );
 
     if (!response.ok) {
-      throw new Error('Failed to update todo');
-    }
+  throw new Error('Failed to update todo');
+}
+
+
   } catch (error) {
     // Roll back if the API update fails
+
     setTodoList((previousTodoList) =>
       previousTodoList.map((todo) =>
         todo.id === editedTodo.id ? originalTodo : todo
       )
     );
-
+invalidateCache();
     setError(error.message);
   }
 };
