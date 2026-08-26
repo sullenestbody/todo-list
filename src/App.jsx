@@ -5,7 +5,7 @@ import TodosPage from './features/Todos/TodosPage.jsx';
 import './App.css';
 
 function App() {
-  const [email, setEmail] = useState('');
+  const [, setEmail] = useState('');
   const [token, setToken] = useState('');
 
   return (
