@@ -9,7 +9,7 @@ import {
   initialTodoState,
   TODO_ACTIONS,
 } from "../../reducers/todoReducer.js";
-import { useAuth } from '../../contexts/AuthContext.jsx';
+import { useAuth } from "../../contexts/AuthContext.jsx";
 
 function TodosPage() {
   const { token } = useAuth();
@@ -86,7 +86,7 @@ function TodosPage() {
     if (token) {
       fetchTodos();
     }
-  }, [token, sortBy, sortDirection, debouncedFilterTerm]);
+  }, [token, sortBy, sortDirection, debouncedFilterTerm, dataVersion]);
 
   const invalidateCache = useCallback(() => {
     dispatch({ type: TODO_ACTIONS.INVALIDATE_CACHE });
