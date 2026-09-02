@@ -68,7 +68,7 @@ export function todoReducer(state, action) {
         ...state,
         filterError: "",
       };
-      F;
+      
     case TODO_ACTIONS.COMPLETE_TODO_START:
       return {
         ...state,
