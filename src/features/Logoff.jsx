@@ -2,9 +2,12 @@ import { useAuth } from '../contexts/AuthContext.jsx';
 
 function Logoff() {
   const { logout } = useAuth();
-
   const handleLogOut = async () => {
-  await logout();
+  const result = await logout();
+
+  if (!result.success) {
+    window.alert(result.error);
+  }
 };
 
 return (
