@@ -19,6 +19,16 @@ The project started as a basic todo list and grew into a multi-page application 
 - Input validation and maximum title lengths
 - User-friendly error messages
 
+## Screenshots
+
+### Desktop
+
+![Todo app desktop view](screenshots/todos-desktop.png)
+
+### Mobile
+
+![Todo app mobile view](screenshots/todos-mobile.png)
+
 ## Technologies Used
 
 - React
@@ -41,6 +51,14 @@ While building this project, I practiced breaking a React application into reusa
 I used React Router to create multiple pages, Context to share authentication state, and `useReducer` to manage todo state and actions. I also added server-side sorting and searching, debounced search input, optimistic todo updates, and status filtering through URL search parameters.
 
 For the final version, I used CSS Modules to give components locally scoped styles and created consistent layouts for the todo, login, profile, and about pages.
+
+## Design Decisions
+
+I used CSS Modules so styles stay scoped to individual components and do not accidentally affect other parts of the application.
+
+I kept the layout simple and centered with consistent spacing, readable typography, and clear form controls. I also added responsive styles so the application remains usable on smaller screens without horizontal scrolling.
+
+For state management, I used React Context and `useReducer` as the application became more complex, which helped keep todo and authentication state organized.
 
 ## Security and Validation
 
@@ -68,3 +86,41 @@ Clone the repository and install the dependencies:
 ```bash
 npm install
 ```
+
+## Available Scripts
+
+### `npm run dev`
+
+Starts the Vite development server.
+
+### `npm run build`
+
+Creates a production build of the application.
+
+### `npm run preview`
+
+Runs the production build locally so it can be tested before deployment.
+
+### `npm run lint`
+
+Runs ESLint to check the project for code quality issues.
+
+## Future Improvements
+
+Possible future improvements include:
+
+- Improved loading indicators
+- More detailed validation feedback
+- Additional accessibility testing
+- Dark mode
+- Todo deletion
+- Due dates and priorities
+- Deployment to a public hosting service
+
+## License
+
+This project is licensed under the MIT License.
+
+## Contact
+
+GitHub: https://github.com/sullenestbody

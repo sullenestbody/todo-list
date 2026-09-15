@@ -12,7 +12,7 @@
 
 .input {
   width: 100%;
-  min-height: 40px;
+  min-height: 44px;
   padding: 0.55rem 0.7rem;
   border: 1px solid #cbd5e1;
   border-radius: 0.4rem;
@@ -37,7 +37,7 @@
 }
 
 .button {
-  min-height: 40px;
+  min-height: 44px;
   padding: 0.55rem 1rem;
   border: 0;
   border-radius: 0.4rem;
