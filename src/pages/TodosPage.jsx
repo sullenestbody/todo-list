@@ -12,11 +12,12 @@ import {
 import { useAuth } from "../contexts/AuthContext.jsx";
 import { useSearchParams } from "react-router";
 import StatusFilter from "../shared/StatusFilter.jsx";
+import styles from "./TodosPage.module.css";
 
 function TodosPage() {
   const { token } = useAuth();
   const [searchParams] = useSearchParams();
-const statusFilter = searchParams.get("status") || "all";
+  const statusFilter = searchParams.get("status") || "all";
   const [state, dispatch] = useReducer(todoReducer, initialTodoState);
 
   const {
@@ -246,7 +247,7 @@ const statusFilter = searchParams.get("status") || "all";
   }
 
   return (
-    <>
+    <main className={styles.page}>
       {error && (
         <div>
           <p>{error}</p>
@@ -303,7 +304,7 @@ const statusFilter = searchParams.get("status") || "all";
           })
         }
       />
-<StatusFilter />
+      <StatusFilter />
       <FilterInput
         filterTerm={filterTerm}
         onFilterChange={handleFilterChange}
@@ -311,14 +312,14 @@ const statusFilter = searchParams.get("status") || "all";
 
       <TodoForm onAddTodo={addTodo} />
 
-     <TodoList
-  dataVersion={dataVersion}
-  todoList={todoList}
-  statusFilter={statusFilter}
-  onCompleteTodo={completeTodo}
-  onUpdateTodo={updateTodo}
-/>
-    </>
+      <TodoList
+        dataVersion={dataVersion}
+        todoList={todoList}
+        statusFilter={statusFilter}
+        onCompleteTodo={completeTodo}
+        onUpdateTodo={updateTodo}
+      />
+    </main>
   );
 }
 

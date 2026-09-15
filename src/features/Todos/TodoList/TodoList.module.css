@@ -1,0 +1,63 @@
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  min-height: 48px;
+  padding: 0.65rem 0.8rem;
+  border: 1px solid #e2e8f0;
+  border-radius: 0.5rem;
+  background: #f8fafc;
+}
+
+.checkbox {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+}
+
+.todoButton {
+  flex: 1;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: #0f172a;
+  text-align: left;
+  cursor: pointer;
+}
+
+.todoButton:hover {
+  color: #2563eb;
+}
+.editForm {
+  width: 100%;
+}
+
+.editActions {
+  display: flex;
+  gap: 0.5rem;
+}
+.todoButton:focus-visible {
+  outline: 2px solid #2563eb;
+  outline-offset: 4px;
+  border-radius: 0.2rem;
+}
+.completed {
+  color: #94a3b8;
+  text-decoration: line-through;
+}
+.emptyState {
+  padding: 1rem;
+  border: 1px dashed #cbd5e1;
+  border-radius: 0.5rem;
+  color: #64748b;
+  text-align: center;
+}

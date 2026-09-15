@@ -1,6 +1,11 @@
-import { useState } from 'react';
-import TextInputWithLabel from '../../../shared/TextInputWithLabel.jsx';
-import { isValidTodoTitle } from '../../../utils/todoValidation.js';
+import { useState } from "react";
+import TextInputWithLabel from "../../../shared/TextInputWithLabel.jsx";
+import {
+  isValidTodoTitle,
+  TODO_TITLE_MAX_LENGTH,
+} from "../../../utils/todoValidation.js";
+import styles from "./TodoList.module.css";
+import formStyles from "../../../shared/FormControls.module.css";
 
 function TodoListItem({ todo, onCompleteTodo, onUpdateTodo }) {
   const [isEditing, setIsEditing] = useState(false);
@@ -31,36 +36,49 @@ function TodoListItem({ todo, onCompleteTodo, onUpdateTodo }) {
   }
 
   return (
-    <li>
+    <li className={styles.item}>
       {isEditing ? (
-        <form onSubmit={handleUpdate}>
+        <form className={styles.editForm} onSubmit={handleUpdate}>
           <TextInputWithLabel
             elementId={`todoTitle-${todo.id}`}
             labelText="Todo"
             value={workingTitle}
             onChange={handleEdit}
+            maxLength={TODO_TITLE_MAX_LENGTH}
           />
 
-          <button type="button" onClick={handleCancel}>
-            Cancel
-          </button>
+          <div className={styles.editActions}>
+            <button
+              className={`${formStyles.button} ${formStyles.secondaryButton}`}
+              type="button"
+              onClick={handleCancel}
+            >
+              Cancel
+            </button>
 
-          <button
-            type="submit"
-            disabled={!isValidTodoTitle(workingTitle)}
-          >
-            Update
-          </button>
+            <button
+              className={formStyles.button}
+              type="submit"
+              disabled={!isValidTodoTitle(workingTitle)}
+            >
+              Update
+            </button>
+          </div>
         </form>
       ) : (
         <>
           <input
+            className={styles.checkbox}
             type="checkbox"
             checked={todo.isCompleted}
             onChange={() => onCompleteTodo(todo.id)}
+            maxLength={TODO_TITLE_MAX_LENGTH}
           />
 
           <button
+            className={`${styles.todoButton} ${
+              todo.isCompleted ? styles.completed : ""
+            }`}
             type="button"
             onClick={() => setIsEditing(true)}
           >

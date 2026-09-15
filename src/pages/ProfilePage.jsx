@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useAuth } from "../contexts/AuthContext.jsx";
+import styles from "./ContentPage.module.css";
 
 function ProfilePage() {
   const { email, token } = useAuth();
@@ -26,13 +27,10 @@ function ProfilePage() {
         let hasNext = true;
 
         while (hasNext) {
-          const response = await fetch(
-            `/api/tasks?limit=100&page=${page}`,
-            {
-              headers: { "X-CSRF-TOKEN": token },
-              credentials: "include",
-            },
-          );
+          const response = await fetch(`/api/tasks?limit=100&page=${page}`, {
+            headers: { "X-CSRF-TOKEN": token },
+            credentials: "include",
+          });
 
           const data = await response.json();
 
@@ -77,23 +75,26 @@ function ProfilePage() {
   }, [token]);
 
   return (
-    <main>
-      <h2>Your Profile</h2>
-      <p>Name: {email}</p>
-      <p>Status: Signed in</p>
+    <main className={styles.page}>
+      <h2 className={styles.title}>Your Profile</h2>
 
-      <h3>Todo Statistics</h3>
+      <p className={styles.text}>Name: {email}</p>
+      <p className={styles.text}>Status: Signed in</p>
+
+      <h3 className={styles.sectionTitle}>Todo Statistics</h3>
+
       {loading ? (
-        <p>Loading statistics...</p>
+        <p className={styles.text}>Loading statistics...</p>
       ) : error ? (
-        <p>{error}</p>
+        <p className={styles.text}>{error}</p>
       ) : (
         <>
-          <p>Total: {stats.total}</p>
-          <p>Completed: {stats.completed}</p>
-          <p>Active: {stats.active}</p>
+          <p className={styles.text}>Total: {stats.total}</p>
+          <p className={styles.text}>Completed: {stats.completed}</p>
+          <p className={styles.text}>Active: {stats.active}</p>
+
           {stats.total > 0 && (
-            <p>
+            <p className={styles.text}>
               Completion: {Math.round((stats.completed / stats.total) * 100)}%
             </p>
           )}

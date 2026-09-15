@@ -1,6 +1,6 @@
 import { useMemo } from "react";
 import TodoListItem from "./TodoListItem.jsx";
-
+import styles from "./TodoList.module.css";
 const emptyMessages = {
   all: "Add todo above to get started.",
   active: "No active todos. Add a todo above to get started.",
@@ -30,9 +30,14 @@ function TodoList({
   }, [todoList, dataVersion, statusFilter]);
 
   return filteredTodoList.todos.length === 0 ? (
-    <p>{emptyMessages[statusFilter] || emptyMessages.all}</p>
+    <p className={styles.emptyState}>
+  {emptyMessages[statusFilter] || emptyMessages.all}
+</p>
   ) : (
-    <ul data-version={filteredTodoList.version}>
+    <ul
+  className={styles.list}
+  data-version={filteredTodoList.version}
+>
       {filteredTodoList.todos.map((todo) => (
         <TodoListItem
           key={todo.id}

@@ -1,9 +1,13 @@
-import { useRef, useState } from 'react';
-import TextInputWithLabel from '../../shared/TextInputWithLabel.jsx';
-import { isValidTodoTitle } from '../../utils/todoValidation.js';
+import { useRef, useState } from "react";
+import TextInputWithLabel from "../../shared/TextInputWithLabel.jsx";
+import {
+  isValidTodoTitle,
+  TODO_TITLE_MAX_LENGTH,
+} from "../../utils/todoValidation.js";
+import styles from "../../shared/FormControls.module.css";
 
 function TodoForm({ onAddTodo }) {
-  const [workingTodoTitle, setWorkingTodoTitle] = useState('');
+  const [workingTodoTitle, setWorkingTodoTitle] = useState("");
   const inputRef = useRef(null);
 
   function handleAddTodo(event) {
@@ -16,23 +20,27 @@ function TodoForm({ onAddTodo }) {
     }
 
     onAddTodo(trimmedTitle);
-    setWorkingTodoTitle('');
+    setWorkingTodoTitle("");
     inputRef.current?.focus();
   }
 
   return (
-    <form onSubmit={handleAddTodo}>
-      <TextInputWithLabel
-        elementId="todoTitle"
-        labelText="Todo"
-        ref={inputRef}
-        value={workingTodoTitle}
-        onChange={(event) => setWorkingTodoTitle(event.target.value)}
-      />
+    <form className={styles.formRow} onSubmit={handleAddTodo}>
+      <div className={styles.formField}>
+        <TextInputWithLabel
+          elementId="todoTitle"
+          labelText="Todo"
+          ref={inputRef}
+          value={workingTodoTitle}
+          onChange={(event) => setWorkingTodoTitle(event.target.value)}
+          maxLength={TODO_TITLE_MAX_LENGTH}
+        />
+      </div>
 
       <button
         type="submit"
         disabled={!isValidTodoTitle(workingTodoTitle)}
+        className={styles.button}
       >
         Add Todo
       </button>

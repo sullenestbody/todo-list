@@ -1,0 +1,26 @@
+.controlGroup {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.label {
+  font-weight: 600;
+  color: #334155;
+}
+
+.select {
+  min-height: 40px;
+  padding: 0.45rem 0.65rem;
+  border: 1px solid #cbd5e1;
+  border-radius: 0.4rem;
+  background: #ffffff;
+  color: #0f172a;
+}
+
+.select:focus-visible {
+  outline: 2px solid #2563eb;
+  outline-offset: 2px;
+}

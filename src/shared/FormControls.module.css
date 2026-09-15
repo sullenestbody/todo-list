@@ -1,0 +1,78 @@
+.fieldGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  margin-bottom: 1rem;
+}
+
+.label {
+  font-weight: 600;
+  color: #334155;
+}
+
+.input {
+  width: 100%;
+  min-height: 40px;
+  padding: 0.55rem 0.7rem;
+  border: 1px solid #cbd5e1;
+  border-radius: 0.4rem;
+  background: #ffffff;
+  color: #0f172a;
+}
+
+.input:focus-visible {
+  outline: 2px solid #2563eb;
+  outline-offset: 2px;
+}
+
+.formRow {
+  display: flex;
+  gap: 0.75rem;
+  align-items: flex-end;
+  margin-bottom: 1.25rem;
+}
+
+.formField {
+  flex: 1;
+}
+
+.button {
+  min-height: 40px;
+  padding: 0.55rem 1rem;
+  border: 0;
+  border-radius: 0.4rem;
+  background: #2563eb;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.button:hover:not(:disabled) {
+  background: #1d4ed8;
+}
+
+.button:disabled {
+  background: #cbd5e1;
+  color: #64748b;
+  cursor: not-allowed;
+}
+
+.button:focus-visible {
+  outline: 2px solid #2563eb;
+  outline-offset: 2px;
+}
+
+@media (max-width: 640px) {
+  .formRow {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}
+.secondaryButton {
+  background: #e2e8f0;
+  color: #334155;
+}
+
+.secondaryButton:hover:not(:disabled) {
+  background: #cbd5e1;
+}

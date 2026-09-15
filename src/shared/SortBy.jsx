@@ -1,3 +1,5 @@
+import styles from "./Controls.module.css";
+
 function SortBy({
   sortBy,
   sortDirection,
@@ -5,10 +7,13 @@ function SortBy({
   onSortDirectionChange,
 }) {
   return (
-    <div>
-      <label htmlFor="sortBy">Sort by:</label>
+    <div className={styles.controlGroup}>
+      <label className={styles.label} htmlFor="sortDirection">
+        Sort by:
+      </label>
       <select
         id="sortBy"
+        className={styles.select}
         value={sortBy}
         onChange={(event) => onSortByChange(event.target.value)}
       >
@@ -16,9 +21,12 @@ function SortBy({
         <option value="title">Title</option>
       </select>
 
-      <label htmlFor="sortDirection">Order:</label>
+      <label className={styles.label} htmlFor="sortDirection">
+        Order:
+      </label>
       <select
         id="sortDirection"
+        className={styles.select}
         value={sortDirection}
         onChange={(event) => onSortDirectionChange(event.target.value)}
       >
