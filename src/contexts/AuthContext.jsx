@@ -12,14 +12,18 @@ export function useAuth() {
 
   return context;
 }
+
 export function AuthProvider({ children }) {
   const [email, setEmail] = useState("");
   const [token, setToken] = useState("");
+
   const login = async (userEmail, password) => {
     try {
       const options = {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+        },
         body: JSON.stringify({
           email: userEmail,
           password,
@@ -34,12 +38,14 @@ export function AuthProvider({ children }) {
         setEmail(data.name);
         setToken(data.csrfToken);
 
-        return { success: true };
+        return {
+          success: true,
+        };
       }
 
       return {
         success: false,
-        error: `Authentication failed: ${data?.message}`,
+        error: "Unable to log in. Check your credentials and try again.",
       };
     } catch {
       return {
@@ -48,11 +54,15 @@ export function AuthProvider({ children }) {
       };
     }
   };
+
   const logout = async () => {
     if (!token) {
       setEmail("");
       setToken("");
-      return { success: true };
+
+      return {
+        success: true,
+      };
     }
 
     try {
@@ -68,17 +78,20 @@ export function AuthProvider({ children }) {
         throw new Error("Failed to log out");
       }
 
-      return { success: true };
+      return {
+        success: true,
+      };
     } catch {
       return {
         success: false,
-        error: "Unable to log in. Check your credentials and try again.",
+        error: "Unable to log out. Please try again.",
       };
     } finally {
       setEmail("");
       setToken("");
     }
   };
+
   return (
     <AuthContext.Provider
       value={{
