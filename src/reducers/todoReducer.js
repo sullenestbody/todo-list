@@ -169,21 +169,22 @@ export function todoReducer(state, action) {
       return {
         ...state,
         error: "",
+        todoList: state.todoList.filter(
+          (todo) => todo.id !== action.payload.id,
+        ),
       };
 
     case TODO_ACTIONS.DELETE_TODO_SUCCESS:
       return {
         ...state,
         error: "",
-        todoList: state.todoList.filter(
-          (todo) => todo.id !== action.payload.id,
-        ),
       };
 
     case TODO_ACTIONS.DELETE_TODO_ERROR:
       return {
         ...state,
         error: action.payload.message,
+        todoList: [action.payload.originalTodo, ...state.todoList],
       };
 
     case TODO_ACTIONS.INVALIDATE_CACHE:

@@ -1,4 +1,3 @@
-
 /* eslint-disable react-refresh/only-export-components */
 import { createContext, useContext, useState } from "react";
 
@@ -13,14 +12,18 @@ export function useAuth() {
 
   return context;
 }
+
 export function AuthProvider({ children }) {
   const [email, setEmail] = useState("");
   const [token, setToken] = useState("");
+
   const login = async (userEmail, password) => {
     try {
       const options = {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+        },
         body: JSON.stringify({
           email: userEmail,
           password,
@@ -35,51 +38,60 @@ export function AuthProvider({ children }) {
         setEmail(data.name);
         setToken(data.csrfToken);
 
-        return { success: true };
+        return {
+          success: true,
+        };
       }
 
       return {
         success: false,
-        error: `Authentication failed: ${data?.message}`,
+        error: "Unable to log in. Check your credentials and try again.",
       };
     } catch {
       return {
         success: false,
-        error: "Network error during login",
+        error: "Unable to log in right now. Please try again.",
       };
     }
   };
+
   const logout = async () => {
-  if (!token) {
-    setEmail("");
-    setToken("");
-    return { success: true };
-  }
+    if (!token) {
+      setEmail("");
+      setToken("");
 
-  try {
-    const response = await fetch("/api/users/logoff", {
-      method: "POST",
-      headers: {
-        "X-CSRF-TOKEN": token,
-      },
-      credentials: "include",
-    });
-
-    if (!response.ok) {
-      throw new Error("Failed to log out");
+      return {
+        success: true,
+      };
     }
 
-    return { success: true };
-  } catch (error) {
-    return {
-      success: false,
-      error: error.message,
-    };
-  } finally {
-    setEmail("");
-    setToken("");
-  }
-};
+    try {
+      const response = await fetch("/api/users/logoff", {
+        method: "POST",
+        headers: {
+          "X-CSRF-TOKEN": token,
+        },
+        credentials: "include",
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to log out");
+      }
+
+      return {
+        success: true,
+      };
+    } catch {
+      return {
+        success: false,
+        error: "Unable to log out. Please try again.",
+      };
+    } finally {
+      setEmail("");
+      setToken("");
+    }
+  };
+
   return (
     <AuthContext.Provider
       value={{
