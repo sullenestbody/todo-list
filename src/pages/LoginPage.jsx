@@ -33,8 +33,8 @@ function LoginPage() {
       const result = await login(email, password);
 
       if (!result.success) {
-        setAuthError("Unable to log in. Check your credentials and try again.");
-      }
+  setAuthError(result.error);
+}
     } catch {
       setAuthError("Unable to log in right now. Please try again.");
     } finally {

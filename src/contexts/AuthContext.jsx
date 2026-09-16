@@ -1,4 +1,3 @@
-
 /* eslint-disable react-refresh/only-export-components */
 import { createContext, useContext, useState } from "react";
 
@@ -45,41 +44,41 @@ export function AuthProvider({ children }) {
     } catch {
       return {
         success: false,
-        error: "Network error during login",
+        error: "Unable to log in right now. Please try again.",
       };
     }
   };
   const logout = async () => {
-  if (!token) {
-    setEmail("");
-    setToken("");
-    return { success: true };
-  }
-
-  try {
-    const response = await fetch("/api/users/logoff", {
-      method: "POST",
-      headers: {
-        "X-CSRF-TOKEN": token,
-      },
-      credentials: "include",
-    });
-
-    if (!response.ok) {
-      throw new Error("Failed to log out");
+    if (!token) {
+      setEmail("");
+      setToken("");
+      return { success: true };
     }
 
-    return { success: true };
-  } catch (error) {
-    return {
-      success: false,
-      error: error.message,
-    };
-  } finally {
-    setEmail("");
-    setToken("");
-  }
-};
+    try {
+      const response = await fetch("/api/users/logoff", {
+        method: "POST",
+        headers: {
+          "X-CSRF-TOKEN": token,
+        },
+        credentials: "include",
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to log out");
+      }
+
+      return { success: true };
+    } catch {
+      return {
+        success: false,
+        error: "Unable to log in. Check your credentials and try again.",
+      };
+    } finally {
+      setEmail("");
+      setToken("");
+    }
+  };
   return (
     <AuthContext.Provider
       value={{

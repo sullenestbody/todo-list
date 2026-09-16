@@ -30,6 +30,7 @@ function TodosPage() {
     filterTerm,
     dataVersion,
   } = state;
+
   const debouncedFilterTerm = useDebounce(filterTerm, 300);
 
   useEffect(() => {
@@ -57,31 +58,36 @@ function TodosPage() {
         });
 
         if (response.status === 401) {
-          throw new Error("unauthorized");
+          throw new Error("Your session has expired. Please log in again.");
         }
 
         if (!response.ok) {
-          throw new Error("Failed to fetch todos");
+          throw new Error("Unable to load todos. Please try again.");
         }
 
         const data = await response.json();
 
         dispatch({
           type: TODO_ACTIONS.FETCH_SUCCESS,
-          payload: { todos: data.tasks },
+          payload: {
+            todos: data.tasks,
+          },
         });
-      } catch {
-        const isFilterError =
+      } catch (caughtError) {
+        const isFilterError = Boolean(
           debouncedFilterTerm ||
           sortBy !== "createdAt" ||
-          sortDirection !== "asc";
+          sortDirection !== "asc",
+        );
+
+        const message = isFilterError
+          ? "Unable to filter or sort todos. Please try again."
+          : caughtError.message;
 
         dispatch({
           type: TODO_ACTIONS.FETCH_ERROR,
           payload: {
-            message: isFilterError
-              ? "Unable to filter or sort todos. Please try again."
-              : "Unable to load todos. Please try again.",
+            message,
             isFilterError,
           },
         });
@@ -94,7 +100,9 @@ function TodosPage() {
   }, [token, sortBy, sortDirection, debouncedFilterTerm, dataVersion]);
 
   const invalidateCache = useCallback(() => {
-    dispatch({ type: TODO_ACTIONS.INVALIDATE_CACHE });
+    dispatch({
+      type: TODO_ACTIONS.INVALIDATE_CACHE,
+    });
   }, []);
 
   const updateTodo = async (editedTodo) => {
@@ -106,7 +114,9 @@ function TodosPage() {
 
     dispatch({
       type: TODO_ACTIONS.UPDATE_TODO_START,
-      payload: { editedTodo },
+      payload: {
+        editedTodo,
+      },
     });
 
     try {
@@ -142,6 +152,7 @@ function TodosPage() {
       });
     }
   };
+
   async function addTodo(todoTitle) {
     const newTodo = {
       id: Date.now(),
@@ -151,7 +162,9 @@ function TodosPage() {
 
     dispatch({
       type: TODO_ACTIONS.ADD_TODO_START,
-      payload: { newTodo },
+      payload: {
+        newTodo,
+      },
     });
 
     try {
@@ -246,9 +259,19 @@ function TodosPage() {
       });
     }
   };
+
   const deleteTodo = async (id) => {
+    const originalTodo = todoList.find((todo) => todo.id === id);
+
+    if (!originalTodo) {
+      return;
+    }
+
     dispatch({
       type: TODO_ACTIONS.DELETE_TODO_START,
+      payload: {
+        id,
+      },
     });
 
     try {
@@ -266,21 +289,26 @@ function TodosPage() {
 
       dispatch({
         type: TODO_ACTIONS.DELETE_TODO_SUCCESS,
-        payload: { id },
       });
+
+      invalidateCache();
     } catch {
       dispatch({
         type: TODO_ACTIONS.DELETE_TODO_ERROR,
         payload: {
+          originalTodo,
           message: "Unable to delete todo. Please try again.",
         },
       });
     }
   };
+
   function handleFilterChange(newTerm) {
     dispatch({
       type: TODO_ACTIONS.SET_FILTER,
-      payload: { filterTerm: newTerm },
+      payload: {
+        filterTerm: newTerm,
+      },
     });
   }
 
@@ -291,7 +319,11 @@ function TodosPage() {
           <p>{error}</p>
           <button
             type="button"
-            onClick={() => dispatch({ type: TODO_ACTIONS.CLEAR_ERROR })}
+            onClick={() =>
+              dispatch({
+                type: TODO_ACTIONS.CLEAR_ERROR,
+              })
+            }
           >
             Clear Error
           </button>
@@ -304,14 +336,22 @@ function TodosPage() {
 
           <button
             type="button"
-            onClick={() => dispatch({ type: TODO_ACTIONS.CLEAR_FILTER_ERROR })}
+            onClick={() =>
+              dispatch({
+                type: TODO_ACTIONS.CLEAR_FILTER_ERROR,
+              })
+            }
           >
             Clear Filter Error
           </button>
 
           <button
             type="button"
-            onClick={() => dispatch({ type: TODO_ACTIONS.RESET_FILTERS })}
+            onClick={() =>
+              dispatch({
+                type: TODO_ACTIONS.RESET_FILTERS,
+              })
+            }
           >
             Reset Filters
           </button>
@@ -342,7 +382,9 @@ function TodosPage() {
           })
         }
       />
+
       <StatusFilter />
+
       <FilterInput
         filterTerm={filterTerm}
         onFilterChange={handleFilterChange}
