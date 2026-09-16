@@ -9,7 +9,8 @@ The project started as a basic todo list and grew into a multi-page application 
 - Log in and log out
 - Add new todos
 - Edit existing todos
-- Mark todos as completed
+- Mark todos as completed or active
+- Delete todos
 - Search todos by title
 - Sort todos by title or creation date
 - Sort in ascending or descending order
@@ -18,7 +19,6 @@ The project started as a basic todo list and grew into a multi-page application 
 - Responsive layout for smaller screens
 - Input validation and maximum title lengths
 - User-friendly error messages
-- Create, edit, complete, uncomplete, and delete todos
 
 ## Screenshots
 
@@ -69,7 +69,7 @@ The application includes several frontend security and validation practices:
 - Todo titles cannot be empty
 - Todo titles have a maximum length
 - Search input has a maximum length
-- Authentication errors display user-friendly messages rather than internal technical details
+- Authentication and todo errors display user-friendly messages rather than internal technical details
 - Authenticated API requests use the application's CSRF token and credentials
 
 ## Challenges
@@ -93,6 +93,27 @@ Clone the repository:
 ```bash
 git clone https://github.com/sullenestbody/todo-list.git
 cd todo-list
+```
+
+Install dependencies:
+
+```bash
+npm install
+```
+
+Create a `.env` file in the project root and add:
+
+```env
+VITE_TARGET=https://ctd-learns-node-l42tx.ondigitalocean.app
+```
+
+Start the development server:
+
+```bash
+npm run dev
+```
+
+Then open the local URL shown by Vite in your browser.
 
 ## Available Scripts
 
@@ -120,7 +141,6 @@ Possible future improvements include:
 - More detailed validation feedback
 - Additional accessibility testing
 - Dark mode
-- Todo deletion
 - Due dates and priorities
 - Deployment to a public hosting service
 
@@ -131,4 +151,3 @@ This project is licensed under the MIT License.
 ## Contact
 
 GitHub: https://github.com/sullenestbody
-```
