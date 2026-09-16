@@ -7,7 +7,7 @@ import {
 import styles from "./TodoList.module.css";
 import formStyles from "../../../shared/FormControls.module.css";
 
-function TodoListItem({ todo, onCompleteTodo, onUpdateTodo }) {
+function TodoListItem({ todo, onCompleteTodo, onUpdateTodo, onDeleteTodo }) {
   const [isEditing, setIsEditing] = useState(false);
   const [workingTitle, setWorkingTitle] = useState(todo.title);
 
@@ -72,7 +72,11 @@ function TodoListItem({ todo, onCompleteTodo, onUpdateTodo }) {
             type="checkbox"
             checked={todo.isCompleted}
             onChange={() => onCompleteTodo(todo.id)}
-            maxLength={TODO_TITLE_MAX_LENGTH}
+            aria-label={
+              todo.isCompleted
+                ? `Mark "${todo.title}" as active`
+                : `Mark "${todo.title}" as completed`
+            }
           />
 
           <button
@@ -83,6 +87,14 @@ function TodoListItem({ todo, onCompleteTodo, onUpdateTodo }) {
             onClick={() => setIsEditing(true)}
           >
             {todo.title}
+          </button>
+
+          <button
+            className={`${formStyles.button} ${formStyles.secondaryButton}`}
+            type="button"
+            onClick={() => onDeleteTodo(todo.id)}
+          >
+            Delete
           </button>
         </>
       )}

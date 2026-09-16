@@ -18,6 +18,7 @@ The project started as a basic todo list and grew into a multi-page application 
 - Responsive layout for smaller screens
 - Input validation and maximum title lengths
 - User-friendly error messages
+- Create, edit, complete, uncomplete, and delete todos
 
 ## Screenshots
 
@@ -79,13 +80,19 @@ Another challenge was keeping filtering and sorting synchronized with API reques
 
 Styling was also added near the end of the project. I used CSS Modules so styles remain scoped to their components and created reusable styles for form controls and content pages.
 
+## Prerequisites
+
+- Node.js
+- npm
+- Git
+
 ## Installation
 
-Clone the repository and install the dependencies:
+Clone the repository:
 
 ```bash
-npm install
-```
+git clone https://github.com/sullenestbody/todo-list.git
+cd todo-list
 
 ## Available Scripts
 
@@ -124,3 +131,4 @@ This project is licensed under the MIT License.
 ## Contact
 
 GitHub: https://github.com/sullenestbody
+```

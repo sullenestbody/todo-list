@@ -70,7 +70,7 @@ function TodosPage() {
           type: TODO_ACTIONS.FETCH_SUCCESS,
           payload: { todos: data.tasks },
         });
-      } catch (error) {
+      } catch {
         const isFilterError =
           debouncedFilterTerm ||
           sortBy !== "createdAt" ||
@@ -80,8 +80,8 @@ function TodosPage() {
           type: TODO_ACTIONS.FETCH_ERROR,
           payload: {
             message: isFilterError
-              ? `Error filtering/sorting todos: ${error.message}`
-              : `Error fetching todos: ${error.message}`,
+              ? "Unable to filter or sort todos. Please try again."
+              : "Unable to load todos. Please try again.",
             isFilterError,
           },
         });
@@ -132,12 +132,12 @@ function TodosPage() {
       });
 
       invalidateCache();
-    } catch (error) {
+    } catch {
       dispatch({
         type: TODO_ACTIONS.UPDATE_TODO_ERROR,
         payload: {
           originalTodo,
-          message: error.message,
+          message: "Unable to update todo. Please try again.",
         },
       });
     }
@@ -183,12 +183,12 @@ function TodosPage() {
       });
 
       invalidateCache();
-    } catch (error) {
+    } catch {
       dispatch({
         type: TODO_ACTIONS.ADD_TODO_ERROR,
         payload: {
           tempId: newTodo.id,
-          message: error.message,
+          message: "Unable to add todo. Please try again.",
         },
       });
     }
@@ -201,9 +201,17 @@ function TodosPage() {
       return;
     }
 
+    const updatedTodo = {
+      ...originalTodo,
+      isCompleted: !originalTodo.isCompleted,
+    };
+
     dispatch({
       type: TODO_ACTIONS.COMPLETE_TODO_START,
-      payload: { id },
+      payload: {
+        id,
+        isCompleted: updatedTodo.isCompleted,
+      },
     });
 
     try {
@@ -215,12 +223,12 @@ function TodosPage() {
         },
         credentials: "include",
         body: JSON.stringify({
-          isCompleted: true,
+          isCompleted: updatedTodo.isCompleted,
         }),
       });
 
       if (!response.ok) {
-        throw new Error("Failed to complete todo");
+        throw new Error("Failed to update todo completion");
       }
 
       dispatch({
@@ -228,17 +236,47 @@ function TodosPage() {
       });
 
       invalidateCache();
-    } catch (error) {
+    } catch {
       dispatch({
         type: TODO_ACTIONS.COMPLETE_TODO_ERROR,
         payload: {
           originalTodo,
-          message: error.message,
+          message: "Unable to update todo. Please try again.",
         },
       });
     }
   };
+  const deleteTodo = async (id) => {
+    dispatch({
+      type: TODO_ACTIONS.DELETE_TODO_START,
+    });
 
+    try {
+      const response = await fetch(`/api/tasks/${id}`, {
+        method: "DELETE",
+        headers: {
+          "X-CSRF-TOKEN": token,
+        },
+        credentials: "include",
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to delete todo");
+      }
+
+      dispatch({
+        type: TODO_ACTIONS.DELETE_TODO_SUCCESS,
+        payload: { id },
+      });
+    } catch {
+      dispatch({
+        type: TODO_ACTIONS.DELETE_TODO_ERROR,
+        payload: {
+          message: "Unable to delete todo. Please try again.",
+        },
+      });
+    }
+  };
   function handleFilterChange(newTerm) {
     dispatch({
       type: TODO_ACTIONS.SET_FILTER,
@@ -318,6 +356,7 @@ function TodosPage() {
         statusFilter={statusFilter}
         onCompleteTodo={completeTodo}
         onUpdateTodo={updateTodo}
+        onDeleteTodo={deleteTodo}
       />
     </main>
   );

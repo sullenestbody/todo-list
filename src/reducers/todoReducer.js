@@ -15,6 +15,10 @@ export const TODO_ACTIONS = {
   UPDATE_TODO_SUCCESS: "UPDATE_TODO_SUCCESS",
   UPDATE_TODO_ERROR: "UPDATE_TODO_ERROR",
 
+  DELETE_TODO_START: "DELETE_TODO_START",
+  DELETE_TODO_SUCCESS: "DELETE_TODO_SUCCESS",
+  DELETE_TODO_ERROR: "DELETE_TODO_ERROR",
+
   SET_SORT: "SET_SORT",
   SET_FILTER: "SET_FILTER",
   CLEAR_ERROR: "CLEAR_ERROR",
@@ -57,6 +61,7 @@ export function todoReducer(state, action) {
         sortDirection: "asc",
         filterError: "",
       };
+
     case TODO_ACTIONS.CLEAR_ERROR:
       return {
         ...state,
@@ -74,12 +79,16 @@ export function todoReducer(state, action) {
         ...state,
         error: "",
         todoList: state.todoList.map((todo) =>
-          todo.id === action.payload.id ? { ...todo, isCompleted: true } : todo,
+          todo.id === action.payload.id
+            ? { ...todo, isCompleted: action.payload.isCompleted }
+            : todo,
         ),
       };
 
-   case TODO_ACTIONS.COMPLETE_TODO_SUCCESS:
-  return { ...state };
+    case TODO_ACTIONS.COMPLETE_TODO_SUCCESS:
+      return {
+        ...state,
+      };
 
     case TODO_ACTIONS.COMPLETE_TODO_ERROR:
       return {
@@ -91,6 +100,7 @@ export function todoReducer(state, action) {
             : todo,
         ),
       };
+
     case TODO_ACTIONS.FETCH_START:
       return {
         ...state,
@@ -122,6 +132,7 @@ export function todoReducer(state, action) {
           (todo) => todo.id !== action.payload.tempId,
         ),
       };
+
     case TODO_ACTIONS.UPDATE_TODO_START:
       return {
         ...state,
@@ -134,7 +145,9 @@ export function todoReducer(state, action) {
       };
 
     case TODO_ACTIONS.UPDATE_TODO_SUCCESS:
-       return { ...state };
+      return {
+        ...state,
+      };
 
     case TODO_ACTIONS.UPDATE_TODO_ERROR:
       return {
@@ -146,11 +159,33 @@ export function todoReducer(state, action) {
             : todo,
         ),
       };
+
+    case TODO_ACTIONS.DELETE_TODO_START:
+      return {
+        ...state,
+        error: "",
+      };
+
+    case TODO_ACTIONS.DELETE_TODO_SUCCESS:
+      return {
+        ...state,
+        todoList: state.todoList.filter(
+          (todo) => todo.id !== action.payload.id,
+        ),
+      };
+
+    case TODO_ACTIONS.DELETE_TODO_ERROR:
+      return {
+        ...state,
+        error: action.payload.message,
+      };
+
     case TODO_ACTIONS.INVALIDATE_CACHE:
       return {
         ...state,
         dataVersion: state.dataVersion + 1,
       };
+
     case TODO_ACTIONS.FETCH_SUCCESS:
       return {
         ...state,
@@ -158,6 +193,7 @@ export function todoReducer(state, action) {
         isTodoListLoading: false,
         filterError: "",
       };
+
     case TODO_ACTIONS.FETCH_ERROR:
       return {
         ...state,
@@ -165,6 +201,7 @@ export function todoReducer(state, action) {
         error: action.payload.isFilterError ? "" : action.payload.message,
         filterError: action.payload.isFilterError ? action.payload.message : "",
       };
+
     default:
       throw new Error(`Unknown action type: ${action.type}`);
   }

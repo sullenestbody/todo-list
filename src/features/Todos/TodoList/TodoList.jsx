@@ -11,6 +11,7 @@ function TodoList({
   todoList,
   onCompleteTodo,
   onUpdateTodo,
+  onDeleteTodo,
   dataVersion,
   statusFilter = "active",
 }) {
@@ -31,19 +32,17 @@ function TodoList({
 
   return filteredTodoList.todos.length === 0 ? (
     <p className={styles.emptyState}>
-  {emptyMessages[statusFilter] || emptyMessages.all}
-</p>
+      {emptyMessages[statusFilter] || emptyMessages.all}
+    </p>
   ) : (
-    <ul
-  className={styles.list}
-  data-version={filteredTodoList.version}
->
+    <ul className={styles.list} data-version={filteredTodoList.version}>
       {filteredTodoList.todos.map((todo) => (
         <TodoListItem
           key={todo.id}
           todo={todo}
           onCompleteTodo={onCompleteTodo}
           onUpdateTodo={onUpdateTodo}
+          onDeleteTodo={onDeleteTodo}
         />
       ))}
     </ul>
